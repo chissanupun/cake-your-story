@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Cake Your Story by S&amp;P</title>
+
+<!-- Design system tokens + styles -->
+<link rel="stylesheet" href="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/tokens/fonts.css" />
+<link rel="stylesheet" href="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/tokens/colors.css" />
+<link rel="stylesheet" href="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/tokens/typography.css" />
+<link rel="stylesheet" href="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/tokens/spacing.css" />
+<link rel="stylesheet" href="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/tokens/elevation.css" />
+<link rel="stylesheet" href="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/tokens/motion.css" />
+<link rel="stylesheet" href="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/styles.css" />
+
+<!-- Phosphor icons -->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+
+<style>
+  * { box-sizing: border-box; }
+
+  /* Warm cream base — override token so every screen picks it up */
+  :root { --cream-100: #FDF6E2; }
+
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    font-family: var(--font-body);
+    color: var(--text-body);
+    background:
+      radial-gradient(120% 60% at 20% 0%, #FCE8EC 0%, transparent 50%),
+      radial-gradient(120% 60% at 90% 100%, #E8F4FF 0%, transparent 55%),
+      var(--cream-100);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* ── Outer stage ─────────────────────────────────────────── */
+  #stage {
+    height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Scattered stickers behind the phone on tablet/desktop */
+  .stage-decor { position: fixed; inset: 0; pointer-events: none; z-index: 0; display: none; }
+  @media (min-width: 768px) { .stage-decor { display: block; } }
+  .stage-decor span {
+    position: absolute; font-size: 56px; opacity: .5;
+    filter: drop-shadow(0 8px 0 rgba(58,35,20,.10));
+  }
+
+  /* ── Phone frame (tablet & mobile only) ──────────────────── */
+  #phone {
+    position: relative;
+    width: 390px;
+    height: 844px;
+    transform-origin: center center;
+    will-change: transform;
+    background: var(--choco-900);
+    border-radius: 54px;
+    padding: 12px;
+    box-shadow:
+      0 2px 0 4px var(--choco-700),
+      0 40px 80px -20px rgba(58,35,20,.5),
+      inset 0 0 0 2px #000;
+    z-index: 1;
+  }
+  /* notch */
+  #phone::after {
+    content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 130px; height: 26px; background: var(--choco-900); border-radius: 0 0 16px 16px; z-index: 20;
+  }
+
+  #screen-clip {
+    position: relative;
+    width: 100%; height: 100%;
+    border-radius: 44px;
+    overflow: hidden;
+    background: var(--cream-100);
+  }
+
+  #app {
+    position: absolute; inset: 0;
+    overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  #app::-webkit-scrollbar { width: 0; }
+
+  /* ── DESKTOP (≥ 1024px): full-viewport, no phone shell ───── */
+  @media (min-width: 1024px) {
+    body { overflow: hidden; }
+    .stage-decor { display: none; }
+    #stage {
+      padding: 0;
+      height: 100dvh;
+      place-items: stretch;
+    }
+    #phone {
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      transform: none !important;
+    }
+    #phone::after { display: none !important; }
+    #screen-clip {
+      border-radius: 0 !important;
+      background: var(--cream-100);
+    }
+    #app {
+      position: absolute; inset: 0;
+      overflow: hidden;
+    }
+  }
+
+  /* ── MOBILE (< 768px): full-bleed, no frame ──────────────── */
+  @media (max-width: 767px) {
+    body { overflow: auto; }
+    #stage { padding: 0; height: 100%; place-items: stretch; overflow: visible; }
+    #phone {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100dvh !important;
+      transform: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+    }
+    #phone::after { display: none !important; }
+    #screen-clip { border-radius: 0 !important; }
+  }
+
+  /* ── Tablet (768–1023px): centered phone, scaled to fit ──── */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    /* fit scaler JS handles this range */
+  }
+
+  /* ── Animations ──────────────────────────────────────────── */
+  .springy-cta { animation: cta-pulse 2.4s var(--ease-in-out) infinite; }
+  @keyframes cta-pulse {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-2px) scale(1.015); }
+  }
+
+  @keyframes pipe-squeeze {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    45% { transform: rotate(-3deg) scale(1.04, .97); }
+    60% { transform: rotate(-3deg) scale(.98, 1.03); }
+  }
+  @keyframes dollop-drop {
+    0%, 40% { transform: translateY(0) scale(.5); opacity: 0; }
+    55% { opacity: 1; }
+    75% { transform: translateY(34px) scale(1); opacity: 1; }
+    100% { transform: translateY(60px) scale(.8); opacity: 0; }
+  }
+
+  /* Transform-only so it never traps invisible in a paused iframe */
+  @keyframes topping-land {
+    0%   { transform: translate(-50%,-50%) translateY(-40px) scale(1.3) rotate(-8deg); }
+    60%  { transform: translate(-50%,-50%) translateY(3px) scale(.94) rotate(2deg); }
+    80%  { transform: translate(-50%,-50%) translateY(-2px) scale(1.03) rotate(-1deg); }
+    100% { transform: translate(-50%,-50%) translateY(0) scale(1) rotate(0deg); }
+  }
+
+  /* Screen transition: animate transform only, not opacity */
+  .screen-anim {
+    animation: screen-in var(--dur-slow) var(--ease-out);
+    display: flex; flex-direction: column; min-height: 100%;
+  }
+  .screen-anim > * { flex: 1 0 auto; }
+  .screen-anim[data-dir="back"] { animation: screen-in-back var(--dur-slow) var(--ease-out); }
+  @keyframes screen-in {
+    from { transform: translateX(22px); }
+    to { transform: translateX(0); }
+  }
+  @keyframes screen-in-back {
+    from { transform: translateX(-22px); }
+    to { transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .springy-cta, .screen-anim { animation: none !important; }
+  }
+
+  /* Desktop: screen-anim fills the full viewport height */
+  @media (min-width: 1024px) {
+    .screen-anim {
+      min-height: 100dvh;
+      height: 100dvh;
+    }
+  }
+
+  em { font-style: italic; }
+</style>
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#FDF6E2">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#FDF6E2" />
+      <g transform="translate(600 430)">
+        <ellipse cx="0" cy="150" rx="250" ry="40" fill="#fff" stroke="#3B2314" stroke-width="14" />
+        <path d="M-200 30 L-200 150 C-200 178 200 178 200 150 L200 30 Z" fill="#F2DCB6" stroke="#3B2314" stroke-width="14" stroke-linejoin="round" />
+        <path d="M-210 35 C-210 -50 -120 -86 0 -86 C120 -86 210 -50 210 35 C200 70 175 75 162 110 C150 75 130 75 118 110 C104 145 80 145 66 110 C52 75 32 75 18 110 C4 145 -20 145 -34 110 C-48 75 -68 75 -82 110 C-96 145 -120 145 -134 110 C-148 75 -172 70 -210 35 Z" fill="#FFFCF6" stroke="#3B2314" stroke-width="14" stroke-linejoin="round" />
+        <circle cx="-90" cy="-70" r="34" fill="#D90429" stroke="#3B2314" stroke-width="10" />
+        <circle cx="0" cy="-96" r="34" fill="#D90429" stroke="#3B2314" stroke-width="10" />
+        <circle cx="90" cy="-70" r="30" fill="#FF8FB1" stroke="#3B2314" stroke-width="10" />
+      </g>
+      <text x="600" y="200" font-family="Fredoka, sans-serif" font-size="96" font-weight="700" fill="#D90429" text-anchor="middle">Cake Your Story</text>
+    </svg>
+  </template>
+
+  <!-- Background sticker-bomb (tablet/desktop ambient decor) -->
+  <div class="stage-decor" aria-hidden="true">
+    <span style="top:8%; left:9%; transform:rotate(-12deg);">🍒</span>
+    <span style="top:20%; right:11%; transform:rotate(10deg); font-size:42px;">🧁</span>
+    <span style="bottom:14%; left:13%; transform:rotate(8deg); font-size:48px;">🍓</span>
+    <span style="bottom:9%; right:9%; transform:rotate(-8deg);">✦</span>
+    <span style="top:48%; left:6%; transform:rotate(6deg); font-size:38px;">⭐️</span>
+    <span style="top:54%; right:7%; transform:rotate(-10deg); font-size:40px;">🍩</span>
+  </div>
+
+  <div id="stage">
+    <div id="phone">
+      <div id="screen-clip">
+        <div id="app"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- React + Babel (pinned) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- Design system bundle -->
+  <script src="_ds/bakespace-ds-cake-your-story-aae867ac-3a48-49f2-8d3d-c073000a87e1/_ds_bundle.js"></script>
+
+  <!-- Data + engines (plain JS) -->
+  <script src="src/data.js"></script>
+  <script src="src/confetti.js"></script>
+
+  <!-- Fit scaler: applies only on tablet (768–1023px); desktop/mobile skip it -->
+  <script>
+    (function () {
+      var PHONE_W = 390, PHONE_H = 844, PAD = 24;
+      var phone = document.getElementById('phone');
+      function fit() {
+        if (!phone) return;
+        var w = window.innerWidth;
+        // Desktop (≥1024px): CSS already makes phone 100% — clear any scale
+        if (w >= 1024) { phone.style.transform = ''; return; }
+        // Mobile (<768px): CSS already makes phone full-bleed — clear any scale
+        if (w < 768) { phone.style.transform = ''; return; }
+        // Tablet (768–1023px): scale the phone mockup to fit the viewport
+        var s = Math.min(
+          (window.innerWidth - PAD) / PHONE_W,
+          (window.innerHeight - PAD) / PHONE_H,
+          1
+        );
+        phone.style.transform = 'scale(' + s + ')';
+      }
+      window.addEventListener('resize', fit);
+      window.addEventListener('orientationchange', fit);
+      fit();
+    })();
+  </script>
+
+  <!-- App (JSX) — layout is driven reactively in App.jsx via matchMedia -->
+  <script type="text/babel" src="src/tweaks-panel.jsx"></script>
+  <script type="text/babel" src="src/Shared.jsx"></script>
+  <script type="text/babel" src="src/CakeStage.jsx?v=4"></script>
+  <script type="text/babel" src="src/Hero.jsx?v=3"></script>
+  <script type="text/babel" src="src/Builder.jsx?v=16"></script>
+  <script type="text/babel" src="src/Reveal.jsx"></script>
+  <script type="text/babel" src="src/Share.jsx"></script>
+  <script type="text/babel" src="src/App.jsx?v=4"></script>
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById('app'));
+    root.render(React.createElement(window.CYSApp));
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

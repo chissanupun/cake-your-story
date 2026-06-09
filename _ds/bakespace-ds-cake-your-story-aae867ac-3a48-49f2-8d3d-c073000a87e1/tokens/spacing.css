@@ -1,0 +1,38 @@
+/* ============================================================
+   Cake Your Story — Spacing, Radii & Sizing Tokens
+   ============================================================ */
+
+:root {
+  /* ---- Spacing scale (8pt base, plush) ------------------ */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4  */
+  --space-2: 0.5rem;    /* 8  */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.5rem;    /* 24 */
+  --space-6: 2rem;      /* 32 */
+  --space-7: 2.5rem;    /* 40 */
+  --space-8: 3rem;      /* 48 */
+  --space-9: 4rem;      /* 64 */
+  --space-10: 5rem;     /* 80 */
+
+  /* ---- Radii — ultra-rounded "cake & cream" contours ---- */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;     /* rounded-3xl default for cards */
+  --radius-xl: 32px;     /* hero cards / preview box */
+  --radius-2xl: 44px;
+  --radius-pill: 999px;  /* CTA buttons, chips */
+  --radius-blob: 48% 52% 55% 45% / 52% 44% 56% 48%; /* organic cream blob @kind radius */
+
+  /* ---- Control sizing ----------------------------------- */
+  --control-h-sm: 38px;
+  --control-h-md: 48px;
+  --control-h-lg: 58px;  /* hit target ≥44px everywhere */
+  --tap-min: 44px;
+
+  /* ---- Layout ---- */
+  --container-max: 1120px;  /* @kind spacing */
+  --microsite-max: 480px;   /* @kind spacing */
+  --gutter: var(--space-5); /* @kind spacing */
+}

@@ -1,0 +1,42 @@
+/* ============================================================
+   Cake Your Story — Elevation, Borders & Depth Tokens
+   Claymorphic / 3D shading — NOT flat material design.
+   The signature look = thick chocolate keyline + soft lifted
+   shadow + an inner highlight that reads like icing sheen.
+   ============================================================ */
+
+:root {
+  /* ---- The signature border ----------------------------- */
+  --bw-ink: 3px;            /* default thick outline */
+  --bw-ink-bold: 4px;       /* heroes / choice cards */
+  --border-card: var(--bw-ink) solid var(--border-ink);
+
+  /* ---- Claymorphic elevation ---------------------------- */
+  /* sm: chips / inline controls */
+  --elev-sm:
+    0 2px 0 rgba(58, 35, 20, 0.18),
+    0 6px 12px rgba(58, 35, 20, 0.12);
+  /* md: standard cards */
+  --elev-md:
+    0 4px 0 rgba(58, 35, 20, 0.16),
+    0 12px 22px rgba(58, 35, 20, 0.14);
+  /* lg: hero / preview box — pronounced lift */
+  --elev-lg:
+    0 8px 0 rgba(58, 35, 20, 0.18),
+    0 22px 40px rgba(58, 35, 20, 0.18);
+
+  /* clay: soft pillow with inner sheen (claymorphism) */
+  --elev-clay:
+    0 10px 24px rgba(58, 35, 20, 0.16),
+    inset 0 3px 6px rgba(255, 255, 255, 0.75),
+    inset 0 -6px 12px rgba(58, 35, 20, 0.10);
+
+  /* ---- Glows -------------------------------------------- */
+  --glow-selected: 0 0 0 4px var(--glow-pink-soft), 0 0 26px 2px rgba(255, 143, 177, 0.55);
+  --glow-gold: 0 0 0 3px var(--gold-300), 0 0 20px rgba(244, 162, 97, 0.5);
+
+  /* ---- Press / tactile offset --------------------------- */
+  --press-shift: 2px;       /* CTA shifts down on press */
+  --tactile-base: 0 4px 0 var(--choco-700);    /* hard drop edge on buttons */
+  --tactile-press: 0 1px 0 var(--choco-700);
+}

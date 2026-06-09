@@ -1,0 +1,73 @@
+/* ============================================================
+   Cake Your Story — Color Tokens
+   "Cake Your Story by S&P" — high-contrast, delicious palette
+   ============================================================ */
+
+:root {
+  /* ---- Brand core --------------------------------------- */
+  --cherry-900: #7A0117;
+  --cherry-700: #A80320;
+  --cherry-600: #C20323;   /* hover/press on cherry */
+  --cherry-500: #D90429;   /* PRIMARY — Cherry Red */
+  --cherry-300: #F4607A;
+  --cherry-100: #FBD0D8;
+  --cherry-050: #FDEAEE;
+
+  /* ---- Chocolate (outlines, ink, deep CTAs) ------------- */
+  --choco-900: #2A1610;
+  --choco-700: #3B2314;   /* primary ink / sticker outline */
+  --choco-500: #5A3A26;
+  --choco-300: #8A6A52;
+
+  /* ---- Cream (comfort backgrounds & surfaces) ----------- */
+  --cream-500: #F3ECDD;   /* tinted cream / muted surface */
+  --cream-300: #FAF4E9;
+  --cream-100: #FDFBF7;   /* PRIMARY light background */
+  --cream-000: #FFFFFF;
+
+  /* ---- Accents ------------------------------------------ */
+  --frosting-500: #A2D2FF;  /* Sky / Frosting Blue */
+  --frosting-300: #C7E5FF;
+  --frosting-100: #E8F4FF;
+
+  --matcha-500: #84A98C;    /* Matcha Green — secondary tokens */
+  --matcha-300: #AFC7B5;
+  --matcha-100: #E4EDE6;
+
+  --gold-500: #F4A261;      /* Soft Gold — sparkles & badges */
+  --gold-300: #F8C79B;
+  --gold-100: #FDEBD8;
+
+  /* ---- Sticker / playful effects ------------------------ */
+  --glow-pink: #FF8FB1;     /* selected-state soft pink glow */
+  --glow-pink-soft: #FFC9DA;
+  --sparkle: #FFE08A;       /* star/sparkle highlight */
+
+  /* ---- Semantic: surfaces ------------------------------- */
+  --surface-page: var(--cream-100);
+  --surface-card: var(--cream-000);
+  --surface-muted: var(--cream-300);
+  --surface-sunken: var(--cream-500);
+  --surface-brand: var(--cherry-500);
+  --surface-brand-deep: var(--cherry-700);
+  --surface-frosting: var(--frosting-100);
+
+  /* ---- Semantic: text ----------------------------------- */
+  --text-strong: var(--choco-900);
+  --text-body: var(--choco-700);
+  --text-muted: var(--choco-300);
+  --text-on-brand: var(--cream-000);
+  --text-on-frosting: var(--choco-700);
+  --text-link: var(--cherry-600);
+
+  /* ---- Semantic: lines & borders ------------------------ */
+  --border-ink: var(--choco-700);     /* the signature thick outline */
+  --border-soft: #EADFCB;
+  --border-frosting: var(--frosting-500);
+
+  /* ---- Semantic: status --------------------------------- */
+  --success: var(--matcha-500);
+  --info: var(--frosting-500);
+  --warning: var(--gold-500);
+  --danger: var(--cherry-500);
+}
