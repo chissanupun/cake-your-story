@@ -1,4 +1,4 @@
-# Cake Your Story — by S&P
+# Cake Your Story — crack the cake 
 
 An interactive cake-builder campaign microsite. Users customize a virtual S&P cake, receive a personality archetype, and can share their creation via URL.
 
