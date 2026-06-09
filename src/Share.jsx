@@ -59,7 +59,7 @@
     );
   }
 
-  function Share({ cake, personality, onRemix, onRestart, tw = {}, desktop = false }) {
+  function Share({ cake, personality, onRemix, onRestart, onBoard, tw = {}, desktop = false }) {
     const motion = tw.motion !== false;
     const [toast, setToast] = React.useState(null);
     const [dl, setDl] = React.useState(false);
@@ -114,8 +114,8 @@
     if (desktop) {
       return (
         <div style={{
-          position: 'relative', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          gap: '60px', padding: '40px 64px', overflow: 'hidden',
+          position: 'absolute', inset: 0, overflowY: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: '60px', padding: '40px 64px',
           background: 'radial-gradient(130% 78% at 50% 0%, var(--frosting-100) 0%, var(--cream-100) 55%)',
         }}>
           <div style={{ position: 'relative', zIndex: 3, flex: 'none' }}>
@@ -132,8 +132,8 @@
             </p>
             {shareTargetsRow}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', marginTop: '24px' }}>
-              <Button variant="cherry" size="lg" full iconLeft={<i className="ph-bold ph-storefront"></i>} onClick={() => fire('🎂', 'Opening S&P shop…', 'cherry')}>
-                Order with S&amp;P
+              <Button variant="cherry" size="lg" full iconLeft="🎂" onClick={onBoard}>
+                Go to Board
               </Button>
               <div style={{ display: 'flex', gap: '10px' }}>
                 <Button variant="frosting" size="md" full iconLeft={<i className="ph-bold ph-share-network"></i>} onClick={doShare}>Share result</Button>
@@ -156,8 +156,8 @@
 
     return (
       <div style={{
-        position: 'relative', minHeight: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
-        padding: '28px 22px 28px', overflow: 'hidden',
+        position: 'absolute', inset: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+        padding: '28px 22px 28px',
         background: 'radial-gradient(130% 78% at 50% 0%, var(--frosting-100) 0%, var(--cream-100) 55%)',
       }}>
         <Badge tone="gold" icon="✦" style={{ marginBottom: '6px' }}>Ready to share</Badge>

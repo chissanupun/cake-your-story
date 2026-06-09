@@ -4,7 +4,7 @@
   const { FloatingStickers } = window.CYSUI;
   const D = window.CYS;
 
-  function Reveal({ cake, personality, onShare, onRemix, tw = {}, desktop = false }) {
+  function Reveal({ cake, personality, onShare, onRemix, onSave, onBoard, saved = false, tw = {}, desktop = false }) {
     const motion = tw.motion !== false;
     const stickers = tw.stickers !== false;
     const confettiCount = tw.confetti || 110;
@@ -55,7 +55,7 @@
       );
       return (
         <div ref={hostRef} style={{
-          position: 'relative', height: '100%', display: 'grid', placeItems: 'center', padding: '40px', overflow: 'hidden',
+          position: 'absolute', inset: 0, overflowY: 'auto', display: 'grid', placeItems: 'start center', padding: '40px',
           background: 'radial-gradient(130% 80% at 50% 0%, var(--frosting-100) 0%, var(--cream-100) 55%)',
         }}>
           <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.85 }}>
@@ -104,7 +104,7 @@
               </div>
             </div>
             <div style={{ display: 'flex', gap: '12px', width: '100%', maxWidth: '560px' }}>
-              <Button variant="cherry" size="lg" full iconLeft={<i className="ph-bold ph-storefront"></i>} onClick={order}>Order my cake</Button>
+              <Button variant="cherry" size="lg" full iconLeft="🎂" onClick={onBoard}>Go to Board</Button>
               <Button variant="frosting" size="lg" full iconLeft={<i className="ph-bold ph-share-network"></i>} onClick={onShare}>Share</Button>
               <Button variant="cream" size="lg" full iconLeft="↺" onClick={onRemix}>Remix</Button>
             </div>
@@ -120,8 +120,8 @@
 
     return (
       <div ref={hostRef} style={{
-        position: 'relative', minHeight: '100%', display: 'flex', flexDirection: 'column',
-        alignItems: 'center', padding: '30px 22px 30px', overflow: 'hidden',
+        position: 'absolute', inset: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column',
+        alignItems: 'center', padding: '30px 22px 30px',
         background: 'radial-gradient(130% 80% at 50% 0%, var(--frosting-100) 0%, var(--cream-100) 55%)'
       }}>
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.85 }}>
@@ -193,11 +193,12 @@
 
         {/* actions */}
         <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', marginTop: '20px', width: '100%', maxWidth: '330px' }}>
-          <Button variant="cherry" size="lg" full iconLeft={<i className="ph-bold ph-storefront"></i>} iconRight="→" onClick={order}>Order my cake</Button>
+          <Button variant="cherry" size="lg" full iconLeft="🎂" iconRight="→" onClick={onBoard}>Go to Board</Button>
           <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
             <Button variant="frosting" size="md" full iconLeft={<i className="ph-bold ph-share-network"></i>} onClick={onShare}>Share my story</Button>
             <Button variant="cream" size="md" full iconLeft="↺" onClick={onRemix}>Remix</Button>
           </div>
+          <span style={{ alignSelf: 'center', fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '12px', color: 'var(--text-muted)' }}>🎂 Saved to your board</span>
         </div>
 
         {toast &&

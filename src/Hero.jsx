@@ -4,15 +4,15 @@
   const { Logo, FloatingStickers } = window.CYSUI;
   const { CakeStage } = window;
 
-  function Hero({ onStart, tw = {}, desktop = false }) {
+  function Hero({ onStart, onBoard, boardCount = 0, tw = {}, desktop = false }) {
     const motion = tw.motion !== false;
     const stickers = tw.stickers !== false;
 
     if (desktop) {
       return (
         <div style={{
-          position: 'relative', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          gap: '64px', padding: '40px 72px', overflow: 'hidden',
+          position: 'absolute', inset: 0, overflowY: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: '64px', padding: '40px 72px',
           background: 'radial-gradient(120% 90% at 50% 18%, var(--frosting-100) 0%, var(--cream-100) 60%)',
         }}>
           {stickers && <FloatingStickers stickers={['🍒', '✦', '🧁', '⭐️', '🍓', '🍩']} motion={motion} />}
@@ -50,9 +50,9 @@
 
     return (
       <div style={{
-        position: 'relative', minHeight: '100%', display: 'flex', flexDirection: 'column',
+        position: 'absolute', inset: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'flex-start', textAlign: 'center',
-        padding: '20px 26px 40px', overflow: 'hidden',
+        padding: '20px 26px 40px',
         background: 'radial-gradient(125% 78% at 50% 26%, var(--frosting-100) 0%, var(--cream-100) 60%)'
       }}>
         {stickers && <FloatingStickers stickers={['🍒', '✦', '🧁', '⭐️', '🍓', '🍩']} motion={motion} />}
@@ -98,6 +98,15 @@
         className="springy-cta">
           Start creating
         </Button>
+        {boardCount > 0 && (
+          <button onClick={onBoard} style={{
+            position: 'relative', zIndex: 3, marginTop: '10px',
+            background: 'var(--cream-000)', border: 'var(--bw-ink) solid var(--border-ink)',
+            borderRadius: 'var(--radius-pill)', padding: '8px 18px', cursor: 'pointer',
+            fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: '13px', color: 'var(--text-body)',
+            boxShadow: 'var(--elev-sm)',
+          }}>🎂 My Board ({boardCount})</button>
+        )}
 
         <div style={{
           position: 'relative', zIndex: 3, margin: '20px 0 8px', display: 'flex', alignItems: 'center', gap: '8px',

@@ -102,6 +102,7 @@
       if (disabled || (e.button != null && e.button !== 0)) return;
       e.stopPropagation();
       const emoji = payload.mode === 'new' ? payload.t.emoji : payload.mode === 'msg' ? '✍️' : payload.p.emoji;
+      const toppingImg = payload.mode === 'new' ? (payload.t.img || null) : payload.mode === 'msg' ? null : (() => { const t = D.toppings.find((x) => x.id === payload.p.id); return t && t.img ? t.img : null; })();
       const sx = e.clientX, sy = e.clientY;
       dragRef.current = { ...payload, active: false, over: false, sx, sy };
       const paint = (x, y) => {
@@ -115,7 +116,10 @@
           if (Math.hypot(x - d.sx, y - d.sy) > 7) {
             d.active = true;
             if (d.mode !== 'msg') {
-              const g = ensureGhost(); g.textContent = emoji; g.style.display = 'block';
+              const g = ensureGhost();
+              if (toppingImg) { g.textContent = ''; g.style.fontSize = ''; g.innerHTML = `<img src="${toppingImg}" alt="" style="width:52px;height:52px;object-fit:contain;display:block;pointer-events:none;user-select:none;">`; }
+              else { g.innerHTML = ''; g.textContent = emoji; }
+              g.style.display = 'block';
               paint(x, y);
             }
             document.body.style.userSelect = 'none';
@@ -264,11 +268,11 @@
     const stepBodyEl = (
       <React.Fragment>
         {step.id === 'pack' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', padding: '12px 4px 4px 12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 110px))', gap: '12px', padding: '12px 4px 4px 12px', justifyContent: 'center' }}>
             {D.packaging.map((p) => (
               <ChoiceCard key={p.id}
                 emoji={
-                  <div style={{ width: '100%', height: '120px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', background: '#FDF0E0', borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0', overflow: 'hidden' }}>
+                  <div style={{ width: '100%', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', background: '#FDF0E0', borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0', overflow: 'hidden' }}>
                     <img src={p.img} alt={p.en} draggable="false" style={{
                       maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto',
                     }} />
@@ -276,7 +280,7 @@
                 }
                 label={p.label} caption={p.caption}
                 selected={cake.packagingId === p.id} onClick={() => pickPackaging(p)}
-                style={{ minHeight: '180px', justifyContent: 'flex-start', background: '#FDF0E0' }} />
+                style={{ minHeight: 'unset', justifyContent: 'flex-start', background: '#FDF0E0' }} />
             ))}
           </div>
         )}
@@ -415,11 +419,9 @@
       </React.Fragment>
     );
 
-    const ctaButton = (
-      <Button variant="cherry" size="lg" full iconRight={isLast ? '✦' : '→'} disabled={!canNext} onClick={goNext}>
-        {isLast ? 'Reveal my story' : 'Next'}
-      </Button>
-    );
+    const ctaButton = desktop
+      ? <Button variant="cherry" size="lg" full iconRight={isLast ? '✦' : '→'} disabled={!canNext} onClick={goNext}>{isLast ? 'Reveal my story' : 'Next'}</Button>
+      : <div style={{ width: '100%', maxWidth: '320px' }}><Button variant="cherry" size="lg" full iconRight={isLast ? '✦' : '→'} disabled={!canNext} onClick={goNext}>{isLast ? 'Reveal my story' : 'Next'}</Button></div>;
 
     const toastEl = toast && (
       <div key={toast.k} style={{ position: 'absolute', left: '50%', bottom: '92px', transform: 'translateX(-50%)', zIndex: 30, whiteSpace: 'nowrap' }}>
@@ -454,7 +456,7 @@
           }}>
             <div style={{ padding: '30px 36px 4px' }}>{progressRow}</div>
             <div style={{ padding: '18px 36px 14px' }}>{stepHeaderEl}</div>
-            <div style={{ flex: 1, overflowY: 'auto', padding: '4px 36px 18px' }}>{stepBodyEl}</div>
+            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 36px 18px' }}>{stepBodyEl}</div>
             <div style={{ padding: '16px 36px 26px', borderTop: '2px solid var(--cream-300)' }}>{ctaButton}</div>
           </div>
 
@@ -484,7 +486,7 @@
         <div style={{ position: 'relative', zIndex: 3, padding: '2px 18px 14px', flex: 1 }}>{stepBodyEl}</div>
 
         <div style={{
-          position: 'sticky', bottom: 0, zIndex: 4, display: 'flex', gap: '12px', alignItems: 'center',
+          position: 'sticky', bottom: 0, zIndex: 4, display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'center',
           padding: '14px 18px calc(16px + env(safe-area-inset-bottom))',
           background: 'linear-gradient(to top, var(--cream-000) 76%, transparent)',
         }}>{ctaButton}</div>
